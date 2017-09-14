@@ -1,0 +1,18 @@
+## Interface: 60200
+## Title: SuuBossMods
+## Notes: Display various timers for Bosses and provides API for starting Timers with other Addons.
+## SavedVariables: SuuBossModsDB
+## Author: Suu
+
+embeds.xml
+
+SuuBossMods_Bar.lua
+SuuBossMods_Text.lua
+SuuBossMods.lua
+SuuBossMods_Options.lua
+SuuBossMods_Mod.lua
+SuuBossMods_Plugin.lua
+SuuBossMods_RangeCheck.lua
+SuuBossMods_Radar.lua
+
+plugins_embed.xml

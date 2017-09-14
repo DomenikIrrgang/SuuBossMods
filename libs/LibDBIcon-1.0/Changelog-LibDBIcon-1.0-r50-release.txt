@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+r50 | funkydude | 2015-09-19 11:24:30 +0000 (Sat, 19 Sep 2015) | 1 line
+Changed paths:
+   A /tags/r50-release (from /trunk:49)
+
+Tagging as r50-release
+------------------------------------------------------------------------
+r49 | funkydude | 2015-09-19 11:20:47 +0000 (Sat, 19 Sep 2015) | 1 line
+Changed paths:
+   M /trunk/LibDBIcon-1.0.toc
+
+Add missing LoadOnDemand flag
+------------------------------------------------------------------------
+r47 | funkydude | 2015-08-23 18:50:26 +0000 (Sun, 23 Aug 2015) | 1 line
+Changed paths:
+   M /trunk/LibDBIcon-1.0/LibDBIcon-1.0.lua
+
+tweaks
+------------------------------------------------------------------------
