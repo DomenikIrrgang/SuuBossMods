@@ -16,6 +16,7 @@ function SBM_Text.new(text, x, y, size)
 	self.y = y
 	self.size = size
 	self.text = text
+	self.visible = false
 	self.locked = true
 	self.frame:SetPoint("TOPLEFT",UIParent, self.x, -self.y)
 	self.frame:SetSize(300, 50)
@@ -45,6 +46,28 @@ end
 
 function SBM_Text:IsLocked()
 	return self.locked
+end
+
+function SBM_Text:Hide()
+	self.visible = false
+	self.frame:Hide()
+end
+
+function SBM_Text:Show()
+	self.visible = true
+	self.frame:Show()
+end
+
+function SBM_Text:SetVisible(visible)
+	if (visible) then
+		self:Show()
+	else
+		self:Hide()
+	end
+end
+
+function SBM_Text:IsVisible()
+	return self.visible
 end
 
 function SBM_Text:SetText(text)

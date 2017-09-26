@@ -14,5 +14,6 @@ SuuBossMods_Mod.lua
 SuuBossMods_Plugin.lua
 SuuBossMods_RangeCheck.lua
 SuuBossMods_Radar.lua
+SuuBossMods_Reminder.lua
 
 plugins_embed.xml
