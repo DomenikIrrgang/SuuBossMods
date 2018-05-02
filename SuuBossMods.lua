@@ -132,6 +132,12 @@ SuuBossMods.Core.Frame:SetScript("OnUpdate", function(_, renderTime)
 			SuuBossMods.Core.Message.TimeSinceLastCheck = 0
 		end
 	end
+
+	for i, Plugin in ipairs(Plugins) do
+		if (Plugin["Update"] ~= nil) then
+			Plugin["Update"](Plugin, renderTime)
+		end
+	end
 end)
 
 SuuBossMods.Core.Frame:SetScript("OnEvent", function(_, event, ...)
@@ -145,7 +151,7 @@ SuuBossMods.Core.Frame:SetScript("OnEvent", function(_, event, ...)
 	
 	for i, Plugin in ipairs(Plugins) do
 		if (Plugin[event] ~= nil) then
-			Plugin[event](...)
+			Plugin[event](Plugin, ...)
 		end
 	end
 end)
@@ -224,8 +230,8 @@ function SuuBossMods:OnInitialize()
 	self:InitMainBars()
 	self:InitSoonBars()	
 	self:InitMessageDisplay()
-	RegisterAddonMessagePrefix(SuuBossMods.Core.SendTimerPrefix);
-	RegisterAddonMessagePrefix(SuuBossMods.Core.StopTimerPrefix);
+	SbmGameApi.RegisterAddonMessagePrefix(SuuBossMods.Core.SendTimerPrefix);
+	SbmGameApi.RegisterAddonMessagePrefix(SuuBossMods.Core.StopTimerPrefix);
 	
 	for i, Callback in ipairs(OnInitCallbacks) do
 		Callback()

@@ -93,10 +93,10 @@ return {
 					name = "Toggle Anchors",
 					desc = "Toggle all Bar Anchors",
 					func = function() SuuBossMods:UnlockAnchor()
-					SuuBossMods.db.profile.mainbar.anchorX = MainBarAnchor.x 
-					SuuBossMods.db.profile.mainbar.anchorY = MainBarAnchor.y
-					SuuBossMods.db.profile.soonbar.anchorX = SoonBarAnchor.x
-					SuuBossMods.db.profile.soonbar.anchorY = SoonBarAnchor.y
+						SuuBossMods.db.profile.mainbar.anchorX = MainBarAnchor.x 
+						SuuBossMods.db.profile.mainbar.anchorY = MainBarAnchor.y
+						SuuBossMods.db.profile.soonbar.anchorX = SoonBarAnchor.x
+						SuuBossMods.db.profile.soonbar.anchorY = SoonBarAnchor.y
 					end,
 				},
 				general = {
@@ -104,8 +104,22 @@ return {
 					type = "group",
 					name = "General",
 					args = {
-						soonbarthreshold = {
+						toggle = {
 							order = 1,
+							type = "execute",
+							name = "Start Test Timers",
+							desc = "Starts some test timers.",
+							func = function() SuuBossMods:UnlockAnchor()
+								SuuBossMods:StartTimer("TestBar1", 20, 1, {["Text"] = "TEST MESSAGE1", ["Duration"] = 3, ["Start"] = 5})
+								SuuBossMods:StartTimer("TestBar2", 17, 1, {["Text"] = "TEST MESSAGE2", ["Duration"] = 4, ["Start"] = 5})
+								SuuBossMods:StartTimer("TestBar3", 14, 1, {["Text"] = "TEST MESSAGE3", ["Duration"] = 4, ["Start"] = 5})
+								SuuBossMods:StartTimer("TestBar4", 11, 1, {["Text"] = "TEST MESSAGE4", ["Duration"] = 2, ["Start"] = 5})
+								SuuBossMods:StartTimer("TestBar5", 8, 1, {["Text"] = "TEST MESSAGE5", ["Duration"] = 5, ["Start"] = 5})
+								SuuBossMods:StartTimer("TestBar6", 5, 1, {["Text"] = "TEST MESSAGE6", ["Duration"] = 5, ["Start"] = 5})
+							end,
+						},
+						soonbarthreshold = {
+							order = 2,
 							name = "SoonBar Threshold",
 							desc = "Sets when the bar switches the anchor.",
 							type = "range",
@@ -115,7 +129,7 @@ return {
 							min = 2, max = 25, step=1,
 						},
 						update_interval = {
-							order = 2,
+							order = 3,
 							name = "BarUpdate Frequency",
 							desc = "Sets the rate at which the timer get updated.",
 							type = "range",

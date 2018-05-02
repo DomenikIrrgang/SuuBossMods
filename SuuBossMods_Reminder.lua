@@ -22,6 +22,27 @@ function plugin:ToggleAnchor()
 	self.display:SetText("MOVE ME")
 end
 
+function plugin:SetScale(scale)
+
+end
+
+function plugin:GetDefaults()
+	return {
+		locked = true,
+		font_color = {["r"] = 10/255, ["g"] = 10/255, ["b"] = 10/255, ["a"] = 0.5},
+		font_size = 24,
+		anchorX = 1000,
+		anchorY = 500,
+	}
+end
+function plugin:Hide()
+
+end
+
+function plugin:COMBAT_LOG_EVENT_UNFILTERED(...)
+
+end
+
 function plugin:GetOptionsTable()
  return {
 			order = 3,
@@ -50,7 +71,7 @@ function plugin:GetOptionsTable()
 						SuuBossMods.db.profile.plugins[self.name].font_size = value
 						self.display:SetFontSize(value)
 					end,
-					min = 10, max = 42, step=1,
+					min = 10, max = 64, step=1,
 				},
 				font_color = {
 					order = 4,
@@ -74,25 +95,4 @@ function plugin:GetOptionsTable()
 				},
 			}	
 		}
-end
-
-function plugin:SetScale(scale)
-
-end
-
-function plugin:GetDefaults()
-	return {
-		locked = true,
-		font_color = {["r"] = 10/255, ["g"] = 10/255, ["b"] = 10/255, ["a"] = 0.5},
-		font_size = 16,
-		anchorX = 1000,
-		anchorY = 500,
-	}
-end
-function plugin:Hide()
-
-end
-
-function plugin:COMBAT_LOG_EVENT_UNFILTERED(...)
-
 end
