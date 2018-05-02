@@ -60,7 +60,12 @@ function SuuBossMods_EncounterHandler:getCurrentEncounter()
     return self.currentEncounter
 end
 
-function SuuBossMods_EncounterHandler:getEvents()
+--[[
+	GameEvents EncounterHandler needs to handle.
+
+	@return Game Events EncounterHandler needs to handle.
+--]]
+function SuuBossMods_EncounterHandler:getGameEvents()
     return {
         "ENCOUNTER_START",
         "ENCOUNTER_END"

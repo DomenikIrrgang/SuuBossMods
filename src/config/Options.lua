@@ -7,28 +7,41 @@ setmetatable(SuuBossMods_Options, {
   end,
 })
 
+--[[
+	Creates new options.
+--]]
 function SuuBossMods_Options.new()
-    local self = setmetatable({}, SuuBossMods_Options)
+	local self = setmetatable({}, SuuBossMods_Options)
+	self.name = "options"
     SuuBossMods.eventDispatcher:addEventListener(self)
     return self
 end
 
-function SuuBossMods_Options:getEvents()
+--[[
+  Returns the customevents that need to be handled by options.
+
+  @return Customevents option needs to handle.
+--]]
+function SuuBossMods_Options:getCustomEvents()
     return {
       "SUUBOSSMODS_INIT_AFTER"
     }
 end
 
-function SuuBossMods_Options:addPlugin(plugin)
-    self.pluginsTable["args"][plugin:getName()] = plugin:getOptionsTable()
-end
-
+--[[
+	Registers OptionsTables and invokes the OPTIONS_TABLE_INIT event
+--]]
 function SuuBossMods_Options:SUUBOSSMODS_INIT_AFTER()
 	SuuBossMods.eventDispatcher:dispatchEvent("OPTIONS_TABLE_INIT")
 	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("SuuBossMods", self.getOptionsTable)
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("SuuBossMods", "SuuBossMods")
 end
 
+--[[
+	Dynamically builds the optionstable to be displayed in the GUI.
+
+  @return The optionstable.
+--]]
 function SuuBossMods_Options:getOptionsTable()
 	local optionsTable = {
 		type = "group",
@@ -39,6 +52,12 @@ function SuuBossMods_Options:getOptionsTable()
 	return optionsTable
 end
 
+--[[
+	Dynamically creates the table for plugin options based on the plugins that are currently
+	loaded.
+
+	@return Plugin optionstable.
+--]]
 function SuuBossMods_Options:getPluginsTable()
 	local plugins = {
 		name = "Plugins",
@@ -59,6 +78,11 @@ function SuuBossMods_Options:getPluginsTable()
 	return plugins
 end
 
+--[[
+	Dynamically creates the table for profile options.
+
+	@return Profile options.
+--]]
 function SuuBossMods_Options:getProfileTable()
 	return {
 		name = "Profile",

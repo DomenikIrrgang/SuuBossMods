@@ -10,9 +10,9 @@ SuuBossMods.profileHandler = SuuBossMods_ProfileHandler()
 SuuBossMods.options = SuuBossMods_Options()
 
 function SuuBossMods:OnInitialize()
-    
     -- Handles all plugins of the addon.
     SuuBossMods.pluginHandler = SuuBossMods_PluginHandler()
+    
     self.eventDispatcher:dispatchEvent("SUUBOSSMODS_INIT_BEFORE")
     self.eventDispatcher:dispatchEvent("SUUBOSSMODS_INIT")
     self.eventDispatcher:dispatchEvent("SUUBOSSMODS_INIT_AFTER")

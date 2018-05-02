@@ -30,7 +30,7 @@ function SuuBossMods_ProfileHandler:SUUBOSSMODS_INIT()
   SuuBossMods.eventDispatcher:dispatchEvent("PROFILE_INIT")
 end
 
-function SuuBossMods_ProfileHandler:getEvents()
+function SuuBossMods_ProfileHandler:getCustomEvents()
   return {
     "SUUBOSSMODS_INIT"
   }

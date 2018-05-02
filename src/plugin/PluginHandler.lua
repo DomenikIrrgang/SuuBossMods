@@ -32,7 +32,6 @@ end
   @param plugin Plugin that will be loaded.
 --]]
 function SuuBossMods_PluginHandler:addPlugin(plugin)
-    print("plugin added")
     table.insert(self.plugins, plugin)
 end
 
@@ -49,10 +48,7 @@ end
   Initialize all plugins after configurations have loaded.
 --]]
 function SuuBossMods_PluginHandler:SUUBOSSMODS_INIT_AFTER()
-    for i, plugin in ipairs(self:getPlugins()) do
-        plugin:init()
-        SuuBossMods.eventDispatcher:addEventListener(plugin)
-	end
+
 end
 
 --[[
@@ -64,13 +60,27 @@ function SuuBossMods_PluginHandler:OPTIONS_TABLE_INIT()
 	end
 end
 
+function SuuBossMods_PluginHandler:ADDON_LOADED(addonName) 
+    for key, plugin in pairs(self:getPlugins()) do
+        if (plugin:getAddonName() == addonName) then
+            plugin:loaded()
+        end
+    end
+end
+
 --[[
   Events the pluginhandler should react to.
 --]]
-function SuuBossMods_PluginHandler:getEvents()
+function SuuBossMods_PluginHandler:getCustomEvents()
     return {
         "SUUBOSSMODS_INIT_BEFORE",
         "SUUBOSSMODS_INIT_AFTER",
         "OPTIONS_TABLE_INIT",
+    }
+end
+
+function SuuBossMods_PluginHandler:getGameEvents()
+    return {
+        "ADDON_LOADED",
     }
 end

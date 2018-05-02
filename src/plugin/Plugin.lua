@@ -7,11 +7,20 @@ setmetatable(SuuBossMods_Plugin, {
   end,
 })
 
-function SuuBossMods_Plugin.new(name)
+--[[
+	Creates a new plugin.
+
+    @param addonName Name of the addon the plugin belongs to.
+    @param pluginName Name the plugin will have in the bossmod.
+--]]
+function SuuBossMods_Plugin.new(addonName, pluginName)
 	local self = setmetatable({}, SuuBossMods_Plugin)
-    self.name = name or "DefaultPluginName"
+    self.name = pluginName or "DefaultPluginName"
+    self.addonName = addonName or "DefaultAddonName"
     self.enabled = true
-    self.events = {
+    self.gameEvents = {
+    }
+    self.customEvents = {
         "PROFILE_CHANGED",
         "PROFILE_INIT",
     }
@@ -22,6 +31,11 @@ end
     Override this function if you want to get called when the BossMod has been initialized.
 --]]
 function SuuBossMods_Plugin:init()
+end
+
+function SuuBossMods_Plugin:loaded() 
+        self:init()
+        SuuBossMods.eventDispatcher:addEventListener(self)
 end
 
 --[[
@@ -80,11 +94,26 @@ function SuuBossMods_Plugin:getName()
 end
 
 --[[
+    Returns the name of the plugin.
+--]]
+function SuuBossMods_Plugin:getAddonName()
+    return self.addonName
+end
+
+--[[
     Returns the events the plugin should react to. Override for 
     changing the events to react to.
 --]]
-function SuuBossMods_Plugin:getEvents()
-    return self.events
+function SuuBossMods_Plugin:getGameEvents()
+    return self.gameEvents
+end
+
+--[[
+    Returns the events the plugin should react to. Override for 
+    changing the events to react to.
+--]]
+function SuuBossMods_Plugin:getCustomEvents()
+    return self.gameEvents
 end
 
 --[[
@@ -92,8 +121,17 @@ end
 
     @param event Event that will be added.
 --]]
-function SuuBossMods_Plugin:addEvent(event)
-    table.insert(self.events, event)
+function SuuBossMods_Plugin:addGameEvent(event)
+    table.insert(self.gameEvents, event)
+end
+
+--[[
+    Adds an event the plugin will react to.
+
+    @param event Event that will be added.
+--]]
+function SuuBossMods_Plugin:addCustomEvent(event)
+    table.insert(self.customEvents, event)
 end
 
 --[[
