@@ -7,7 +7,7 @@ setmetatable(SuuBossMods_Plugin, {
   end,
 })
 
-function SuuBossMods_Plugin.new(_, name)
+function SuuBossMods_Plugin.new(name)
 	local self = setmetatable({}, SuuBossMods_Plugin)
     self.name = name or "DefaultPluginName"
     self.enabled = true

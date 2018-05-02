@@ -11,7 +11,7 @@ setmetatable(SuuBossMods_PluginHandler, {
   Creates a new PluginHandler and registers itself as an EventListener.
 --]]
 function SuuBossMods_PluginHandler.new()
-    local self = setmetatable({}, Plugin)
+    local self = setmetatable({}, SuuBossMods_PluginHandler)
     self.plugins = {}
     SuuBossMods.eventDispatcher:addEventListener(self)
 	return self
@@ -32,6 +32,7 @@ end
   @param plugin Plugin that will be loaded.
 --]]
 function SuuBossMods_PluginHandler:addPlugin(plugin)
+    print("plugin added")
     table.insert(self.plugins, plugin)
 end
 

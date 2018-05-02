@@ -44,10 +44,11 @@ end
   @param ... Arguments of the event.
 --]]
 function SuuBossMods_EventDispatcher:dispatchEvent(event, ...)
+  print(event)
   if self.listener[event] ~= nil then
-    for key, value in pairs(self.listener[event]) do
-      if (value[event]["isEnabled"] ~= nil or (value[event]["isEnabled"] and value[event]:isEnabled())) then
-        value[event](value, ...)
+    for key, listener in pairs(self.listener[event]) do
+      if (listener["isEnabled"] == nil or (listener["isEnabled"] ~= nil and listener:isEnabled())) then
+        listener[event](listener, ...)
       end
     end
   end

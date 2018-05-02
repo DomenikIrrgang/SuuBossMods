@@ -1,4 +1,5 @@
 ## Interface: 80000
+## Version 0.1
 ## Title: SuuBossMods
 ## Notes: Modular Bossmod for Dungeons and Raids.
 ## SavedVariables: SuuBossModsDB
@@ -6,5 +7,6 @@
 
 libraries.xml
 
+GameApi.lua
 classpath.xml
-./src/core/SuuBossMods.lua
+src\core\SuuBossMods.lua
