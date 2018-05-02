@@ -13,4 +13,3 @@ function SuuBossMods.NewPlugin.new(_, name)
 	SuuBossMods:AddPlugin(self)
 	return self
 end
-

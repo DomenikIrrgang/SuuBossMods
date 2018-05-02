@@ -1,77 +1,36 @@
-local test = "test"
+SuuBossMods_Options = {}
+SuuBossMods_Options.__index = SuuBossMods_Options
 
-local GUIMenuOptions = { 
-	{
-		type = "group",
-		value = "Bars",
-		name = "Bars",
-		text = "Bars",
-		childGroups = "select",
-		icon = "Interface\\Icons\\INV_Drink_05",
-		args = {
-			intro = {
-				order = 1,
-				type = "description",
-				name = "Here you can set up your bars",
-			}
-		}
-	},
-	{
-		value = "B",
-		text = "Bravo",
-		children = {
-			{ 
-				value = "C", 
-				text = "Charlie"
-			},
-			{
-				value = "D",	
-				text = "Delta",
-				children = { 
-					{ 
-						value = "E",
-						text = "Echo"
-					} 
-				}
-			}
-		}
-	}
-}
-local GUIMenuSV = GUIMenuSV or {
-	text = "LOL"
-}  
-
-local icon = LibStub("LibDBIcon-1.0")
-
-local SuuBossModsLDB = LibStub("LibDataBroker-1.1"):NewDataObject("SuuBossMods!", {
-	type = "data source",
-	text = "SuuBossMods!",
-	icon = "Interface\\Icons\\monk_ability_cherrymanatea",
-	OnTooltipShow = function(tooltip)
-		tooltip:SetText("SuuBossMods")
-		tooltip:AddLine("Opens Config Window.", 1, 1, 1)
-		tooltip:Show()
-	end,
-	OnClick = SuuBossMods["MinimapClick"],
+setmetatable(SuuBossMods_Options, {
+  __call = function (cls, ...)
+    return cls.new(...)
+  end,
 })
 
+function SuuBossMods_Options.new()
+    local self = setmetatable({}, SuuBossMods_Options)
+    SuuBossMods.eventDispatcher:addEventListener(self)
+    self.optionsTable = optionsTable
+    return self
+end
 
+function SuuBossMods_Options:getEvents()
+    return {
+      "SUUBOSSMODS_INIT_AFTER"
+    }
+end
 
-local OnInit = function()
-	local OptionsTable = GetOptionsTable()
-	
-	for i, Plugin in ipairs(SuuBossMods:GetPlugins()) do
-		if (Plugin["GetOptionsTable"] ~= nil and Plugin.name ~= nil) then
-			OptionsTable["args"].plugins["args"][Plugin.name] = Plugin:GetOptionsTable()
-		end
-	end	
-	
-	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("SuuBossMods", OptionsTable)
+function SuuBossMods_Options:addPlugin(plugin)
+    self.optionsTable["args"].plugins["args"][plugin:getName()] = plugin:getOptionsTable()
+end
+
+function SuuBossMods_Options:SUUBOSSMODS_INIT_AFTER()
+    SuuBossMods.eventDispatcher:dispatchEvent("OPTIONS_TABLE_INIT")
+	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("SuuBossMods", self.optionsTable)
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("SuuBossMods", "SuuBossMods")
 end
 
-function GetOptionsTable()
-return {
+local optionsTable = {
 	type = "group",
 	args = {
 		bars = {
@@ -91,10 +50,10 @@ return {
 					name = "Toggle Anchors",
 					desc = "Toggle all Bar Anchors",
 					func = function() SuuBossMods:UnlockAnchor()
-						SuuBossMods.db.profile.mainbar.anchorX = MainBarAnchor.x 
-						SuuBossMods.db.profile.mainbar.anchorY = MainBarAnchor.y
-						SuuBossMods.db.profile.soonbar.anchorX = SoonBarAnchor.x
-						SuuBossMods.db.profile.soonbar.anchorY = SoonBarAnchor.y
+					SuuBossMods.db.profile.mainbar.anchorX = MainBarAnchor.x 
+					SuuBossMods.db.profile.mainbar.anchorY = MainBarAnchor.y
+					SuuBossMods.db.profile.soonbar.anchorX = SoonBarAnchor.x
+					SuuBossMods.db.profile.soonbar.anchorY = SoonBarAnchor.y
 					end,
 				},
 				general = {
@@ -102,22 +61,8 @@ return {
 					type = "group",
 					name = "General",
 					args = {
-						toggle = {
-							order = 1,
-							type = "execute",
-							name = "Start Test Timers",
-							desc = "Starts some test timers.",
-							func = function() SuuBossMods:UnlockAnchor()
-								SuuBossMods:StartTimer("TestBar1", 20, 1, {["Text"] = "TEST MESSAGE1", ["Duration"] = 3, ["Start"] = 5})
-								SuuBossMods:StartTimer("TestBar2", 17, 1, {["Text"] = "TEST MESSAGE2", ["Duration"] = 4, ["Start"] = 5})
-								SuuBossMods:StartTimer("TestBar3", 14, 1, {["Text"] = "TEST MESSAGE3", ["Duration"] = 4, ["Start"] = 5})
-								SuuBossMods:StartTimer("TestBar4", 11, 1, {["Text"] = "TEST MESSAGE4", ["Duration"] = 2, ["Start"] = 5})
-								SuuBossMods:StartTimer("TestBar5", 8, 1, {["Text"] = "TEST MESSAGE5", ["Duration"] = 5, ["Start"] = 5})
-								SuuBossMods:StartTimer("TestBar6", 5, 1, {["Text"] = "TEST MESSAGE6", ["Duration"] = 5, ["Start"] = 5})
-							end,
-						},
 						soonbarthreshold = {
-							order = 2,
+							order = 1,
 							name = "SoonBar Threshold",
 							desc = "Sets when the bar switches the anchor.",
 							type = "range",
@@ -127,7 +72,7 @@ return {
 							min = 2, max = 25, step=1,
 						},
 						update_interval = {
-							order = 3,
+							order = 2,
 							name = "BarUpdate Frequency",
 							desc = "Sets the rate at which the timer get updated.",
 							type = "range",
@@ -478,63 +423,3 @@ return {
 		},
 	}
 }
-end
-
-SuuBossMods:AddInitCallback(OnInit)
-
-function SuuBossMods:CreateOptionsWindow()
-	SuuBossMods.GUI = AceGUI:Create("Frame")
-	SuuBossMods.GUI:SetCallback("OnClose",function(widget)
-		AceGUI:Release(widget)
-		GUICreated = false
-	end)
-	SuuBossMods.GUI:SetTitle(SuuBossMods.Info.Name)
-	SuuBossMods.GUI:SetStatusText("v" .. SuuBossMods.Info.Version)
-	SuuBossMods.GUI:SetLayout("Flow")
-	
-	local btn = AceGUI:Create("Button")
-	btn:SetWidth(170)
-	btn:SetText("Button !")
-	btn:SetCallback("OnClick", function() print("Click!") end)	
-	SuuBossMods.GUI:AddChild(btn)
-	
-	local treewidget = AceGUI:Create("TreeGroup")
-	treewidget:SetTree(GUIMenuOptions)
-	treewidget:SetStatusTable(GUIMenuSV)
-	treewidget:SetFullWidth(true)
-	treewidget:SetFullHeight(true)
-	treewidget:SetCallback("OnGroupSelected", function(_,_,value)
-		if (value == "Bars") then
-			print("juhu")
-		end
-	end)
-	SuuBossMods.GUI:AddChild(treewidget)
-	
-	
-	GUICreated = true
-end
-
-function SuuBossMods:MinimapClick(ClickType)
-	SuuBossMods:ShowOptionsWindow()
-end
-
-function SuuBossMods:InitMinimapButton()
-	icon:Register("SuuBossMods!", SuuBossModsLDB, self.db.profile.minimap)
-end
-
-function SuuBossMods:ChangeMinimapButtonVisibility()
-	self.db.profile.minimap.hide = not self.db.profile.minimap.hide
-	if self.db.profile.minimap.hide then
-		icon:Hide("SuuBossMods!")
-	else
-		icon:Show("SuuBossMods!")
-	end
-end
-
-function SuuBossMods:ShowOptionsWindow()
-	if (GUICreated) then
-		SuuBossMods.GUI.Hide(SuuBossMods.GUI)
-	else
-		SuuBossMods:CreateOptionsWindow()
-	end
-end

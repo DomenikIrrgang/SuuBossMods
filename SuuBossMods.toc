@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 ## Interface: 80000
+=======
+## Interface: 70300
+## Version: 0.1
+>>>>>>> master
 ## Title: SuuBossMods
-## Notes: Display various timers for Bosses and provides API for starting Timers with other Addons.
+## Notes: Modular Bossmod for Dungeons and Raids.
 ## SavedVariables: SuuBossModsDB
 ## Author: Suu
 
-embeds.xml
+libraries.xml
 
+<<<<<<< HEAD
 GameApi.lua
 SuuBossMods_Bar.lua
 SuuBossMods_Text.lua
@@ -15,3 +21,7 @@ SuuBossMods_Mod.lua
 SuuBossMods_Plugin.lua
 SuuBossMods_Reminder.lua
 SuuBossMods_EncounterTimer.lua
+=======
+classpath.xml
+./src/core/SuuBossMods.lua
+>>>>>>> master
