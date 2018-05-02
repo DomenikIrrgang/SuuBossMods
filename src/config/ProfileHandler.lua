@@ -15,7 +15,7 @@ function SuuBossMods_ProfileHandler.new(_, name)
 end
 
 function SuuBossMods_ProfileHandler:ProfileChanged()
-    SuuBossMods.eventDispatcher:dispatchEvent("PROFILE_CHANGED")
+  SuuBossMods.eventDispatcher:dispatchEvent("PROFILE_CHANGED")
 end
 
 function SuuBossMods_ProfileHandler:getDefaults()
@@ -24,8 +24,8 @@ end
 
 function SuuBossMods_ProfileHandler:SUUBOSSMODS_INIT()
   self.db = LibStub("AceDB-3.0"):New("SuuBossModsDB", self.defaults)
-	self.db.RegisterCallback(self, "OnProfileChanged", "ProfileChanged")
-	self.db.RegisterCallback(self, "OnProfileCopied", "ProfileChanged")
+  self.db.RegisterCallback(self, "OnProfileChanged", "ProfileChanged")
+  self.db.RegisterCallback(self, "OnProfileCopied", "ProfileChanged")
   self.db.RegisterCallback(self, "OnProfileReset", "ProfileChanged")
   SuuBossMods.eventDispatcher:dispatchEvent("PROFILE_INIT")
 end
@@ -39,16 +39,16 @@ end
 local defaults = {
 	profile = {
 		modules = {
-			['*'] = {
-				enabled = true,
-				locked = true,
-				visible = true,
-			},
-		},
-		plugins = {
       ['*'] = {
-				enabled = true,
-			},
+        enabled = true,
+        locked = true,
+        visible = true,
+      },
+    },
+    plugins = {
+      ['*'] = {
+        enabled = true,
+      }, 
     },
 	},
 }
