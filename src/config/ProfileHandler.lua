@@ -11,7 +11,7 @@ function SuuBossMods_ProfileHandler.new(_, name)
   local self = setmetatable({}, SuuBossMods_ProfileHandler)
   self.defaults = defaults
   SuuBossMods.eventDispatcher:addEventListener(self)
-	return self
+  return self
 end
 
 function SuuBossMods_ProfileHandler:ProfileChanged()
