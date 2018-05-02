@@ -1,9 +1,7 @@
-local bar_counter = 0
+SuuBossMods_EventDispatcher = {}
+SuuBossMods_EventDispatcher.__index = SuuBossMods_EventDispatcher
 
-EventDispatcher = {}
-EventDispatcher.__index = EventDispatcher
-
-setmetatable(EventDispatcher, {
+setmetatable(SuuBossMods_EventDispatcher, {
   __call = function (cls, ...)
     return cls.new(...)
   end,
@@ -12,8 +10,8 @@ setmetatable(EventDispatcher, {
 --[[
   Creates a new Eventdispatcher.
 --]]
-function EventDispatcher.new()
-    local self = setmetatable({}, EventDispatcher)
+function SuuBossMods_EventDispatcher.new()
+    local self = setmetatable({}, SuuBossMods_EventDispatcher)
     self.listener = {}
     self.frame = CreateFrame("frame")
     self.frame:SetScript("OnEvent", function(_, event, ...)
@@ -28,7 +26,7 @@ end
 
   @param eventListener EventListener to be added.
 --]]
-function EventDispatcher:addEventListener(eventListener)
+function SuuBossMods_EventDispatcher:addEventListener(eventListener)
   for key, value in pairs(eventListener:getEvents()) do
     if (self.listener[value] == nil) then
       self.listener[value] = {}
@@ -39,14 +37,18 @@ end
 
 --[[
   Calls all listeners for a given event and forwards the event arguments.
+  Also check if a listener is enabled by calling isEnabled() before invoking
+  the event function.
 
   @param event Event that will be dispatched.
   @param ... Arguments of the event.
 --]]
-function EventDispatcher:dispatchEvent(event, ...)
+function SuuBossMods_EventDispatcher:dispatchEvent(event, ...)
   if self.listener[event] ~= nil then
     for key, value in pairs(self.listener[event]) do
-      value[event](value, ...)
+      if (value[event]["isEnabled"] ~= nil or (value[event]["isEnabled"] and value[event]:isEnabled())) then
+        value[event](value, ...)
+      end
     end
   end
 end

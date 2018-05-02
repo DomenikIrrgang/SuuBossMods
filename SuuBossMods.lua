@@ -5,9 +5,6 @@
 
 SuuBossMods = LibStub("AceAddon-3.0"):NewAddon("SuuBossMods", "AceConsole-3.0")
 
-local AceGUI = LibStub("AceGUI-3.0")
-local GUIOpen = false
-local GUICreated = false
 local OnInitCallbacks = {}
 
 local Plugins = {}
