@@ -47,9 +47,31 @@ function SuuBossMods_Options:getOptionsTable()
 		type = "group",
 		args = {},
 	}
+	optionsTable.args["modules"] = SuuBossMods_Options.getModulesTable()
 	optionsTable.args["plugins"] = SuuBossMods_Options.getPluginsTable()
 	optionsTable.args["profile"] = SuuBossMods_Options.getProfileTable()
 	return optionsTable
+end
+
+function SuuBossMods_Options:getModulesTable()
+	local modules = {
+		name = "Modules",
+		type = "group",
+		order = 1,
+		childGroups = "select",
+		args = {
+			intro = {
+				order = 1,
+				type = "description",
+				name = "Change settings of a module.",
+			},
+		},
+	}
+	for key, module in pairs(SuuBossMods.dungeonModuleLoader:getModules()) do
+		print(module:getOptionsTable())
+		modules.args[module:getName()] = module:getOptionsTable()
+	end
+	return modules
 end
 
 --[[

@@ -1,9 +1,16 @@
 <Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+  <Script file="src\util\CreateClass.lua"/>
   <Script file="src\eventdispatcher\EventDispatcher.lua"/>
   <Script file="src\config\Options.lua"/>
   <Script file="src\config\ProfileHandler.lua"/>
   <Script file="src\encounter\Encounter.lua"/>
   <Script file="src\encounter\EncounterHandler.lua"/>
+  <Script file="src\encounter\EncounterModule.lua"/>
+  <Script file="src\encounter\EncounterModuleLoader.lua"/>
   <Script file="src\plugin\Plugin.lua"/>
   <Script file="src\plugin\PluginHandler.lua"/>
+  <Script file="src\dungeon\Dungeon.lua"/>
+  <Script file="src\dungeon\DungeonHandler.lua"/>
+  <Script file="src\dungeon\DungeonModule.lua"/>
+  <Script file="src\dungeon\DungeonModuleLoader.lua"/>
 </Ui>

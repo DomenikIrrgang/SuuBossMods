@@ -13,11 +13,22 @@ setmetatable(SuuBossMods_EventDispatcher, {
 function SuuBossMods_EventDispatcher.new()
     local self = setmetatable({}, SuuBossMods_EventDispatcher)
     self.listener = {}
+    self.gameEvents = {}
     self.frame = SbmGameApi.CreateFrame("Frame", "SuuBossMods_EventDispatcher")
     self.frame:SetScript("OnEvent", function(_, event, ...)
       self:dispatchEvent(event, ...)
     end)
     return self
+end
+
+--[[
+  Removes all listener of the dispatcher
+--]]
+function SuuBossMods_EventDispatcher:clear()
+  self.listener = {}
+  for event, value in pairs(self.gameEvents) do
+    self.frame:UnregisterEvent(event)
+  end
 end
 
 --[[
@@ -43,6 +54,7 @@ function SuuBossMods_EventDispatcher:addGameEventListener(eventListener)
       self:addEventIfNotExist(event)
       if (self.listener[eventvalue] == nil) then
         self.listener[event] = {}
+        self.gameEvents[event] = true
       end
       table.insert(self.listener[event], eventListener)
     end

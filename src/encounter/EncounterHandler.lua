@@ -26,8 +26,8 @@ end
     @param raidSize Size of the raid when encounter has been pulled.
 --]]
 function SuuBossMods_EncounterHandler:ENCOUNTER_START(id, name, difficulty, raidSize)
-    self.currentEncounter = SuuBossMods.Encounter(name, id, difficulty, raidSize)
-    SuuBossMods.eventDispatcher.dispatchEvent("SUUBOSSMODS_ENCOUNTER_START", self.currentEncounter)
+    self.currentEncounter = SuuBossMods_Encounter(name, id, difficulty, raidSize)
+    SuuBossMods.eventDispatcher:dispatchEvent("SUUBOSSMODS_ENCOUNTER_START", self.currentEncounter)
 end
 
 --[[
@@ -36,9 +36,11 @@ end
     @param result Result of the encounter.
 --]]
 function SuuBossMods_EncounterHandler:ENCOUNTER_END(_, _, _, _, result)
-    self.currentEncounter:endEncounter(result)
-    SuuBossMods.eventDispatcher.dispatchEvent("SUUBOSSMODS_ENCOUNTER_END", self.currentEncounter)
-    table.insert(self.encounterHistory, self.currentEncounter)
+    if (self.currentEncounter ~= nil) then
+        self.currentEncounter:endEncounter(result)
+        table.insert(self.encounterHistory, self.currentEncounter)
+    end
+    SuuBossMods.eventDispatcher:dispatchEvent("SUUBOSSMODS_ENCOUNTER_END", self.currentEncounter)
     self.currentEncounter = nil
 end
 

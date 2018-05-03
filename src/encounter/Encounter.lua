@@ -24,7 +24,7 @@ function SuuBossMods_Encounter.new(name, id, difficulty, raidSize)
 	self.difficulty = difficulty
     self.name = name
     self.raidSize = raidSize
-    SuuBossMods:ChatMessage(encounterName .. " has been pulled. Good luck!")
+    SuuBossMods:chatMessage(self.name .. " (" .. self.id .. ") has been pulled. Good luck!")
     return self
 end
 
@@ -74,8 +74,8 @@ function SuuBossMods_Encounter:endEncounter(result)
     self.running = false
     self.result = result
     if (self.result == 1) then
-        SuuBossMods:ChatMessage("Encounter against " .. self.name .. " (Success) has ended.")
+        SuuBossMods:chatMessage("Encounter against " .. self.name .. " (Success) has ended.")
     else
-        SuuBossMods:ChatMessage("Encounter against " .. self.name .. " (Wipe) has ended.")
+        SuuBossMods:chatMessage("Encounter against " .. self.name .. " (Wipe) has ended.")
     end
 end

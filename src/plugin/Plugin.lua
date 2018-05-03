@@ -113,7 +113,7 @@ end
     changing the events to react to.
 --]]
 function SuuBossMods_Plugin:getCustomEvents()
-    return self.gameEvents
+    return self.customEvents
 end
 
 --[[
