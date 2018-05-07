@@ -8,6 +8,7 @@ function SuuBossMods_DungeonModule.new(name, uiMapId)
     self.moduleId = moduleCount
     moduleCount = moduleCount + 1
     self.encounterModules = {}
+    self.combatLogEventDispatcher = SuuBossMods_CombatLogEventDispatcher()
     self.gameEvents = {}
     self.customEvents = {}
     return self

@@ -38,6 +38,7 @@ function SuuBossMods_DungeonModuleLoader:unloadModule()
     if (self.activeModule ~= nil) then
         self.activeModule:unload()
         self.eventDispatcher:clear()
+        self.combatLogEventDispatcher:clear()
     end
 end
 
