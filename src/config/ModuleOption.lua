@@ -1,5 +1,8 @@
 SuuBossMods_ModuleOption = CreateClass()
 
+--[[
+    Creates a new options entry for an options table in SuuBossMods.
+]]--
 function SuuBossMods_ModuleOption.new(name, description, type, get, set, source, setting1, setting2, setting3, setting4, setting5)
     local self = setmetatable({}, SuuBossMods_ModuleOption)
     self.name = name
