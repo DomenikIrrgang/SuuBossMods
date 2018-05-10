@@ -48,7 +48,6 @@ function SuuBossMods_DungeonHandler:startNewDungeon()
         self:stopCurrentDungeon()
     end
     self.currentDungeon = SuuBossMods_Dungeon(name, difficultyId, difficultyName, instanceMapID)
-    print(uiMapId)
     SuuBossMods:chatMessage("Entered Dungeon: " .. self.currentDungeon.name .. " (" .. self.currentDungeon.uiMapId .. ")")
     SuuBossMods.eventDispatcher:dispatchEvent("DUNGEON_ENTERED", self.currentDungeon)
 end

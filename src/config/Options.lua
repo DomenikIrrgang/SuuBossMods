@@ -46,7 +46,8 @@ function SuuBossMods_Options:getOptionsTable()
 	local optionsTable = {
 		type = "group",
 		args = {},
-	}
+    }
+    optionsTable.args["messagedisplay"] = SuuBossMods.messageDisplay:getOptionsTable()
 	optionsTable.args["modules"] = SuuBossMods_Options.getModulesTable()
 	optionsTable.args["plugins"] = SuuBossMods_Options.getPluginsTable()
 	optionsTable.args["profile"] = SuuBossMods_Options.getProfileTable()
@@ -68,7 +69,6 @@ function SuuBossMods_Options:getModulesTable()
 		},
 	}
 	for key, module in pairs(SuuBossMods.dungeonModuleLoader:getModules()) do
-		print(module:getOptionsTable())
 		modules.args[module:getName()] = module:getOptionsTable()
 	end
 	return modules

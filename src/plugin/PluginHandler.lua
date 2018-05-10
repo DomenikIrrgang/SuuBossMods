@@ -18,9 +18,9 @@ function SuuBossMods_PluginHandler.new()
 end
 
 --[[
-  Returns all plugins that have been loaded.
+  Returns all plugins that have been added.
 
-  @return Plugins that have been loaded.
+  @return Plugins that have been added.
 --]]
 function SuuBossMods_PluginHandler:getPlugins() 
     return self.plugins
@@ -29,26 +29,10 @@ end
 --[[
   Loads a plugin.
 
-  @param plugin Plugin that will be loaded.
+  @param plugin Plugin that will be added.
 --]]
 function SuuBossMods_PluginHandler:addPlugin(plugin)
     table.insert(self.plugins, plugin)
-end
-
---[[
-  Set the default profiles values of all plugins loaded.
---]]
-function SuuBossMods_PluginHandler:SUUBOSSMODS_INIT_BEFORE()
-    for i, plugin in ipairs(self:getPlugins()) do
-	    SuuBossMods.profileHandler:getDefaults()["profile"]["plugins"][plugin.name] = plugin:getDefaultSettings()
-	end
-end
-
---[[
-  Initialize all plugins after configurations have loaded.
---]]
-function SuuBossMods_PluginHandler:SUUBOSSMODS_INIT_AFTER()
-
 end
 
 --[[
@@ -63,7 +47,7 @@ end
 function SuuBossMods_PluginHandler:ADDON_LOADED(addonName) 
     for key, plugin in pairs(self:getPlugins()) do
         if (plugin:getAddonName() == addonName) then
-            plugin:loaded()
+            plugin:load()
         end
     end
 end
@@ -73,8 +57,6 @@ end
 --]]
 function SuuBossMods_PluginHandler:getCustomEvents()
     return {
-        "SUUBOSSMODS_INIT_BEFORE",
-        "SUUBOSSMODS_INIT_AFTER",
         "OPTIONS_TABLE_INIT",
     }
 end

@@ -2,9 +2,6 @@ SuuBossMods = LibStub("AceAddon-3.0"):NewAddon("SuuBossMods", "AceConsole-3.0")
 
 -- Event Dispatcher for all Events. Needs to be first.
 SuuBossMods.eventDispatcher = SuuBossMods_EventDispatcher()
-
--- Provides Profile Data Functionality
-SuuBossMods.profileHandler = SuuBossMods_ProfileHandler()
  
 -- Provides information about the current dungeon/raid in progress
 SuuBossMods.dungeonHandler = SuuBossMods_DungeonHandler()
@@ -17,6 +14,12 @@ SuuBossMods.encounterHandler = SuuBossMods_EncounterHandler()
 
 -- Provides facilities to create modules for boss encounters
 SuuBossMods.encounterModuleLoader = SuuBossMods_EncounterModuleLoader()
+
+-- GUI Element to display text messages for a certain time
+SuuBossMods.messageDisplay = SuuBossMods_MessageDisplay()
+
+-- Provides Profile Data Functionality
+SuuBossMods.profileHandler = SuuBossMods_ProfileHandler()
 
 -- Addon options.
 SuuBossMods.options = SuuBossMods_Options()

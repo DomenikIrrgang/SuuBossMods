@@ -52,7 +52,7 @@ function SuuBossMods_EventDispatcher:addGameEventListener(eventListener)
   if (eventListener.getGameEvents ~= nil) then
     for key, event in pairs(eventListener:getGameEvents()) do
       self:addEventIfNotExist(event)
-      if (self.listener[eventvalue] == nil) then
+      if (self.listener[event] == nil) then
         self.listener[event] = {}
         self.gameEvents[event] = true
       end
@@ -100,7 +100,7 @@ end
 function SuuBossMods_EventDispatcher:dispatchEvent(event, ...)
   if self.listener[event] ~= nil then
     for key, listener in pairs(self.listener[event]) do
-      if (listener["isEnabled"] == nil or (listener["isEnabled"] ~= nil and listener:isEnabled())) then
+      if (listener["isEnabled"] == nil or (listener["isEnabled"] ~= nil and listener:isEnabled()) and listener[event] ~= nil) then
         listener[event](listener, ...)
       end
     end

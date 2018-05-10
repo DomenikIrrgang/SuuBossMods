@@ -4,6 +4,7 @@ function SuuBossMods_CombatLogEventDispatcher.new()
     local self = setmetatable({}, SuuBossMods_CombatLogEventDispatcher)
     self.eventDispatcher = SuuBossMods_EventDispatcher()
     self.events = {}
+    self.enabled = false
     SuuBossMods.eventDispatcher:addEventListener(self)
     return self
 end
@@ -14,15 +15,23 @@ function SuuBossMods_CombatLogEventDispatcher:getGameEvents()
     }
 end
 
-function SuuBossMods_CombatLogEventDispatcher:addEventCallback(eventName, spellId, callback)
+function SuuBossMods_CombatLogEventDispatcher:addEventCallback(eventName, spellId, callback, source)
     if (self.events[eventName] == nil) then
         self.events[eventName] = {}
     end
     local eventCallback = {}
     eventCallback.callback = callback
     eventCallback.spellId = spellId
+    eventCallback.source = source
     table.insert(self.events[eventName], eventCallback)
-    print(self.events[eventName])
+end
+
+function SuuBossMods_CombatLogEventDispatcher:isEnabled()
+    return self.enabled
+end
+
+function SuuBossMods_CombatLogEventDispatcher:setEnabled(enabled)
+    self.enabled = enabled
 end
 
 function SuuBossMods_CombatLogEventDispatcher:clear()
@@ -43,10 +52,17 @@ function SuuBossMods_CombatLogEventDispatcher:COMBAT_LOG_EVENT_UNFILTERED()
     combatLogEvent.auraType = auraType
     combatLogEvent.amount = amount
 
+    local guidValues = {}
+	local i = 1
+    for word in string.gmatch(combatLogEvent.sourceGuid, '([^-]+)') do
+        guidValues[i] = word
+        i = i + 1
+    end
+    combatLogEvent.unitId = guidValues[6]
+
     if (self.events[combatLogEvent.event] ~= nil) then
         for i, eventListener in ipairs(self.events[combatLogEvent.event]) do
-            print(eventListener.spellId, spellId)
-            if (eventListener.spellId == spellId and event ~= "UNIT_DIED") then
+            if ((eventListener.spellId == spellId or eventListener.spellId == nil) and event ~= "UNIT_DIED") then
                 local guidValues = {}
                 local j = 1
                             
@@ -56,9 +72,8 @@ function SuuBossMods_CombatLogEventDispatcher:COMBAT_LOG_EVENT_UNFILTERED()
                 end
                 if (guidValues[1] == "Creature") then
                     combatLogEvent.npc = guidValues[6]
-                    print(combatLogEvent.npc)	
                 end
-                eventListener:callback(combatLogEvent)
+                eventListener.callback(eventListener.source, combatLogEvent)
             end
             
             if (event == "UNIT_DIED" and eventListener.event == "UNIT_DIED") then

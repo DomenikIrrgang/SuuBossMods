@@ -37,8 +37,11 @@ end
 function SuuBossMods_DungeonModuleLoader:unloadModule()
     if (self.activeModule ~= nil) then
         self.activeModule:unload()
+        self.activeModule.combatLogEventDispatcher:setEnabled(false)
+        self.activeModule.combatLogEventDispatcher:clear()
         self.eventDispatcher:clear()
-        self.combatLogEventDispatcher:clear()
+        SuuBossMods.eventDispatcher:dispatchEvent("DUNGEONMODULE_UNLOADED", self.activeModule)
+        self.activeModule = nil
     end
 end
 
@@ -46,7 +49,9 @@ function SuuBossMods_DungeonModuleLoader:loadModule(dungeon)
     for key, module in pairs(self.modules) do
         if (module.uiMapId == dungeon.uiMapId) then
             self.activeModule = module
+            self.activeModule:loadDefaultSettings()
             self.activeModule:init()
+            self.activeModule.combatLogEventDispatcher:setEnabled(true)
             self.eventDispatcher:addEventListener(self.activeModule)
             SuuBossMods.eventDispatcher:dispatchEvent("DUNGEONMODULE_LOADED", self.activeModule)
             return

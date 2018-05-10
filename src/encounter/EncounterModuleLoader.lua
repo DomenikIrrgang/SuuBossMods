@@ -14,6 +14,7 @@ function SuuBossMods_EncounterModuleLoader:getCustomEvents()
         "SUUBOSSMODS_ENCOUNTER_START",
         "SUUBOSSMODS_ENCOUNTER_END",
         "DUNGEONMODULE_LOADED",
+        "DUNGEONMODULE_UNLOADED",
     }
 end
 
@@ -29,19 +30,26 @@ function SuuBossMods_EncounterModuleLoader:DUNGEONMODULE_LOADED(dungeonModule)
     self.modules = dungeonModule:getEncounterModules()
 end
 
+function SuuBossMods_EncounterModuleLoader:DUNGEONMODULE_UNLOADED(dungeonModule)
+    self:unloadModule()
+    self.modules = {}
+end
+
 function SuuBossMods_EncounterModuleLoader:unloadModule()
     if (self.activeModule ~= nil) then
         self.activeModule:unload()
+        self.activeModule.combatLogEventDispatcher:setEnabled(false)
+        self.activeModule.combatLogEventDispatcher:clear()
         self.eventDispatcher:clear()
     end
 end
 
 function SuuBossMods_EncounterModuleLoader:loadModule(encounter)
     for key, module in pairs(self.modules) do
-        print(module.encounterId, encounter.id)
         if (module.encounterId == encounter.id) then
             self.activeModule = module
             self.activeModule:init()
+            self.activeModule.combatLogEventDispatcher:setEnabled(true)
             self.eventDispatcher:addEventListener(self.activeModule)
             return
         end

@@ -6,6 +6,7 @@ function SuuBossMods_EncounterModule.new(encounterName, encounterId)
     self.gameEvents = {}
     self.encounterName = encounterName
     self.customEvents = {}
+    self.combatLogEventDispatcher = SuuBossMods_CombatLogEventDispatcher()
     return self
 end
 
