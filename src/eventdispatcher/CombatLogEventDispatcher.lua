@@ -49,8 +49,14 @@ function SuuBossMods_CombatLogEventDispatcher:COMBAT_LOG_EVENT_UNFILTERED()
     combatLogEvent.spellId = spellId
     combatLogEvent.spellName = spellName
     combatLogEvent.spellSchool = spellSchool
-    combatLogEvent.auraType = auraType
-    combatLogEvent.amount = amount
+
+    if (event == "SPELL_INTERRUPT") then
+        combatLogEvent.interuptedSpellId = auraType
+        combatLogEvent.interuptedSpellName = amount
+    else
+        combatLogEvent.auraType = auraType
+        combatLogEvent.amount = amount
+    end
 
     local guidValues = {}
 	local i = 1

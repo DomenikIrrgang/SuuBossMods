@@ -50,14 +50,14 @@ function SuuBossMods_DungeonModuleLoader:loadModule(dungeon)
         if (module.uiMapId == dungeon.uiMapId) then
             self.activeModule = module
             self.activeModule:loadDefaultSettings()
-            self.activeModule:init()
+            self.activeModule:load()
             self.activeModule.combatLogEventDispatcher:setEnabled(true)
             self.eventDispatcher:addEventListener(self.activeModule)
             SuuBossMods.eventDispatcher:dispatchEvent("DUNGEONMODULE_LOADED", self.activeModule)
             return
         end
     end
-    SuuBossMods:chatMessage("No module found for dungeon!")
+    SuuBossMods:chatMessage("No module found for this dungeon!")
 end
 
 function SuuBossMods_DungeonModuleLoader:hasActiveModule()

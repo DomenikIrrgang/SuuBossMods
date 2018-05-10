@@ -21,13 +21,12 @@ function SuuBossMods_DungeonModule:getName()
     return self.name
 end
 
-function SuuBossMods_DungeonModule:init()
+function SuuBossMods_DungeonModule:load()
     self:addEventCallback("SPELL_CAST_START", nil, self.collectInfo)
-    self:addEventCallback("SPELL_INTERUPT", nil, self.collectInfo)
+    self:addEventCallback("SPELL_INTERRUPT", nil, self.collectInfo)
 end
 
 function SuuBossMods_DungeonModule:unload()
-
 end
 
 function SuuBossMods_DungeonModule:newModule(encounterName, encounterId)
@@ -62,8 +61,8 @@ function SuuBossMods_DungeonModule:collectInfo(combatLogEvent)
         end
     end
 
-    if (combatLogEvent.event == "SPELL_INTERUPT") then
-        self:getSettings().spellData[combatLogEvent.spellId].interuptable = true
+    if (combatLogEvent.event == "SPELL_INTERRUPT") then
+        self:getSettings().spellData[combatLogEvent.interuptedSpellId].interuptable = true
     end
 end
 
