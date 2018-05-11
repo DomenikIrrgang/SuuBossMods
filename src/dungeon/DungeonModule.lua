@@ -41,7 +41,7 @@ end
 
 function SuuBossMods_DungeonModule:collectInfo(combatLogEvent)
     if (combatLogEvent.event == "SPELL_CAST_START") then
-        if (self:getSettings().spellData[combatLogEvent.spellId] == nil) then
+        if (self:getSettings().spellData[combatLogEvent.spellId] == nil and combatLogEvent.unitId ~= nil) then
             self:getSettings().spellData[combatLogEvent.spellId] = {}
             self:getSettings().spellData[combatLogEvent.spellId].name = combatLogEvent.spellName
             self:getSettings().spellData[combatLogEvent.spellId].units = {}
